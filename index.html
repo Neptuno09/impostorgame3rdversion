@@ -474,7 +474,11 @@ textarea::placeholder, input[type="number"]::placeholder {
             gameState.selectedObject = gameState.objects[Math.floor(Math.random() * gameState.objects.length)];
             
             // Seleccionar impostores aleatorios
-            const shuffled = [...gameState.players].sort(() => Math.random() - 0.5);
+            const shuffled = [...gameState.players];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
             gameState.impostors = shuffled.slice(0, impostorCount);
             
             // Seleccionar jugador inicial aleatorio
