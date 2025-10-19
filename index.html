@@ -473,11 +473,15 @@ textarea::placeholder, input[type="number"]::placeholder {
             // Seleccionar objeto secreto aleatorio
             gameState.selectedObject = gameState.objects[Math.floor(Math.random() * gameState.objects.length)];
             
-            // Seleccionar impostores aleatorios
-            const shuffled = [...gameState.players];
-            for (let i = shuffled.length - 1; i > 0; i--) {
+            // Barajar lista completa de jugadores usando Fisher-Yates
+            const shuffledPlayers = [...gameState.players];
+            for (let i = shuffledPlayers.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                [shuffledPlayers[i], shuffledPlayers[j]] = [shuffledPlayers[j], shuffledPlayers[i]];
+            }
+            
+            // Tomar los primeros N jugadores del array barajado como impostores
+            gameState.impostors = shuffledPlayers.slice(0, impostorCount);
             }
             gameState.impostors = shuffled.slice(0, impostorCount);
             
